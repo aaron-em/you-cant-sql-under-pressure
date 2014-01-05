@@ -1,4 +1,6 @@
-you-cant-sql-under-pressure
+You Can't SQL Under Pressure
 ===========================
 
-You Can't SQL Under Pressure - How quickly can you query?
+Inspired by UsVsTh3m's [You Can't JavaScript Under Pressure](http://games.usvsth3m.com/javascript-under-pressure/): One database. Five resultsets to match. **How quickly can you query?**
+
+Built with Angular, Node, SQLite, Emacs, and love. But the readme's not written yet.
