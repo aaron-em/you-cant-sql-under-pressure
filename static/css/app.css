@@ -1,0 +1,38 @@
+div.tables span, div.history span {
+  white-space: pre;
+  font-family: monospace;
+}
+
+div.history ul {
+  list-style-type: none;
+  padding-left: 0ex;
+}
+
+div.history div {
+  margin-bottom: 1ex;
+}
+
+div.history span {
+  display: block;
+}
+
+div.history span.time {
+  float: right;
+}
+
+div.history span.result table thead tr th {
+  border-bottom: #888 solid 1px;
+}
+
+div.history th, div.history td {
+  text-align: left;
+  padding-right: 1ex;
+}
+
+.pass {
+  background: #EFE;
+}
+
+.fail {
+  background: #FEE;
+}

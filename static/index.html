@@ -1,0 +1,48 @@
+<!doctype html>
+<html ng-app="youCantSql">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-sanitize.min.js"></script>
+    <script src="/javascript/query.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/app.css" />
+  </head>
+  <body>
+    <a href="https://github.com/aaron-em/you-cant-sql-under-pressure">
+      <img style="position: absolute; top: 0; right: 0; border: 0;"
+           src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+           alt="Fork me on GitHub!">
+    </a>
+    
+    <h1>You can't SQL under pressure.</h1>
+
+    <div ng-controller="timerController">
+      {{formattedTime}}
+    </div>
+
+    <div ng-controller="queryController">
+      <div class="tables">
+        <span>(schemas go here)</span>
+      </div>
+
+      <div class="query">
+        <textarea id="query" name="query" ng-model="query"></textarea>
+        <button id="send" ng-click="send()">Send</button>
+      </div>
+
+      <div class="history">
+        <ul>
+          <li ng-repeat="item in history">
+            <div class="{{item.status}}">
+              <span class="time">{{item.time}}</span>
+              <span class="query"
+                    ng-bind-html="item.query"></span>
+              <span class="result"
+                    ng-bind-html="item.result"></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+  </body>
+</html>
