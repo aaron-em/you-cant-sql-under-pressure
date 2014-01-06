@@ -90,7 +90,6 @@ youCantSql.controller('gameController', function($scope, $rootScope,
     
     $scope.tryQuery = function tryQuery () {
         if ($scope.query) {
-            console.log($scope.query);
             timer.stop();
             return $http
                 .get('/round/'
