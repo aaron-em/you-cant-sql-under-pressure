@@ -1,46 +1,197 @@
 <!doctype html>
 <html ng-app="youCantSql">
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-sanitize.min.js"></script>
-    <script src="/javascript/query.js"></script>
+    <script src="/javascript/timerService.js"></script>
+    <script src="/javascript/youcantsql.js"></script>
+    <script src="/javascript/controllers/timer.js"></script>
+    <script src="/javascript/controllers/info.js"></script>
+    <script src="/javascript/controllers/gameStart.js"></script>
+    <script src="/javascript/controllers/game.js"></script>
+    <script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/app.css" />
   </head>
-  <body>
-    <a href="https://github.com/aaron-em/you-cant-sql-under-pressure">
-      <img style="position: absolute; top: 0; right: 0; border: 0;"
-           src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
-           alt="Fork me on GitHub!">
-    </a>
+  <body ng-controller="gameController">
+    <h1>{{title}}</h1>
     
-    <h1>You can't SQL under pressure.</h1>
+    <div id="game">
 
-    <div ng-controller="timerController">
-      {{formattedTime}}
-    </div>
+      <a href="https://github.com/aaron-em/you-cant-sql-under-pressure"
+         ng-show="!running">
+        <img style="position: absolute; top: 0; right: 0; border: 0;"
+             src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+             alt="Fork me on GitHub!"></a>
+        
+      <div id="info" ng-controller="infoController"
+           ng-show="visible">
+        
+        <div id="tldr" ng-click="toggleSectionVisible('tldr')">
+          <span class="title">What is this?</span> This is a game!
+          <span ng-show="isSectionVisible('tldr')">
+            <p>
+              One database.<br />
+              Five resultsets to match.<br />
+              <b>How quickly can you query?</b>
+            </p>
+            <p>
+              Inspired by UsVsTh3m's
+              <a href="http://games.usvsth3m.com/javascript-under-pressure/">
+                You Can't JavaScript Under Pressure</a>.
+              When you're done here, go play theirs too!
+            </p>
+            <p>
+              (Oh, and you can click on these blue info boxes to hide or reveal their contents.)
+            </p>
+          </span>
+        </div>
+        
+        <div id="more" ng-click="toggleSectionVisible('more')">
+          <span class="title">Would you like to know more?</span> Read this.
+          <span ng-show="isSectionVisible('more')">
+            <ol>
+              <li><span>What is this made out of?</span>
+                SQLite, Node.js, Express, Angular.js, Emacs, and love.</li>
+              <li><span>And you're accepting arbitrary database queries?</span>
+                Yep.</li>
+              <li><span>Seriously? From anyone on the Internet?</span>
+                Sure am.</li>
+              <li><span>So can I break it?</span>
+                Feel free to try. Let me know if you succeed.</li>
+              <li><span>And what sort of anti-cheating measures do you use?</span>
+                None in particular.</li>
+              <li><span>So I can cheat to my heart's content?</span>
+                Sure. But what's the point? You'll only be fooling
+                yourself, most likely, and even if you manage to sell
+                the lie to anyone else, you'll know in your heart it's
+                hollow.</li>
+              <li><span>Fair enough. Was that a Github link I saw?</span>
+                <a href="https://github.com/aaron-em/you-cant-sql-under-pressure/">Sure.</a></li>
+              <li><span>Great. Now that we've got the preliminaries
+                out of the way, what do I need to know to play this
+                game?</span>  You'll need to know how to write basic
+                and intermediate SQL queries, in the SQLite
+                dialect. If you don't know from joins, or aren't
+                reasonably familiar with the basic SQL string and
+                aggregate functions, you're gonna have a bad
+                time. (Now might be a good opportunity to
+                review <a href="http://www.sqlite.org/lang.html">the
+                SQLite language reference</a>; nothing in this game
+                should be SQLite-specific, but since that's the
+                dialect we're using, it's your best place to
+                start.)</li>
+              <li><span>How fair is the timing?</span>  As fair as I
+                can make it. The timer starts when you click "Start
+                the game!", and runs from then until you beat the last
+                round or close the window, but it pauses during server
+                interaction. Every second you spend squinting and
+                scratching your head counts toward your total time;
+                every second the server spends doing likewise does
+                not. Who can say fairer than that?</li>
+              <li><span>One last question: Any bugs in this?</span>
+                Almost certainly. If you think you've found
+                one, <a href="mailto:me@aaron-miller.me">email me</a>,
+                or open an issue on the Github repo, and give me all
+                the information you can about what's going wrong -- I
+                really appreciate it!</li>
+            </ol>
+          </span>
+        </div>
 
-    <div ng-controller="queryController">
-      <div class="tables">
-        <span>(schemas go here)</span>
+        <div id="schemas" class="schemas tables info"
+             ng-click="toggleSectionVisible('schemas')">
+          <span class="title">Database contents.</span> Better have a look at these!
+          <span ng-show="isSectionVisible('schemas')">
+            <table>
+              <tr>
+                <td style="width: 33%;">
+                  
+                  <div id="book">
+                    <table><caption>book</caption><thead><tr><th>id</th><th>title</th></tr></thead><tbody><tr><td>1</td><td>Gödel, Escher, Bach: An Eternal Golden Braid</td></tr><tr><td>2</td><td>Surely You're Joking, Mr. Feynman!</td></tr><tr><td>3</td><td>The Moon is a Harsh Mistress</td></tr><tr><td>4</td><td>The Feynman Lectures on Computation</td></tr><tr><td>5</td><td>The Cat who Walks through Walls</td></tr><tr><td>6</td><td>To Sail Beyond the Sunset</td></tr><tr><td>7</td><td>The Pleasure of Finding Things Out</td></tr><tr><td>8</td><td>Metamagical Themas</td></tr></tbody></table>
+                  </div>
+
+                </td>
+                <td style="width: 33%;">
+
+                  <div id="author">
+                    <table><caption>author</caption><thead><tr><th>id</th><th>name</th></tr></thead><tbody><tr><td>1</td><td>Douglas Hofstadter</td></tr><tr><td>2</td><td>Richard P. Feynman</td></tr><tr><td>3</td><td>Robert A. Heinlein</td></tr><tr><td>4</td><td>Charles Stross</td></tr><tr><td>5</td><td>Peter Watts</td></tr></tbody></table>
+                  </div>
+                  
+                </td>
+                <td style="width: 33%;">
+
+                  <div id="book_author">
+                    <table><caption>book_author</caption><thead><tr><th>book_id</th><th>author_id</th></tr></thead><tbody><tr><td>1</td><td>1</td></tr><tr><td>2</td><td>2</td></tr><tr><td>3</td><td>3</td></tr><tr><td>4</td><td>2</td></tr><tr><td>5</td><td>3</td></tr><tr><td>6</td><td>3</td></tr><tr><td>7</td><td>2</td></tr><tr><td>8</td><td>1</td></tr></tbody></table>
+                  </div>
+
+                </td>
+              </tr>
+            </table>
+          </span>
+        </div>
+        
       </div>
 
-      <div class="query">
-        <textarea id="query" name="query" ng-model="query"></textarea>
-        <button id="send" ng-click="send()">Send</button>
+      <div id="start" ng-controller="gameStartController"
+           ng-show="visible">
+        <button ng-click="startGame()">Start the game!</button>
       </div>
 
-      <div class="history">
-        <ul>
-          <li ng-repeat="item in history">
-            <div class="{{item.status}}">
-              <span class="time">{{item.time}}</span>
-              <span class="query"
-                    ng-bind-html="item.query"></span>
-              <span class="result"
-                    ng-bind-html="item.result"></span>
-            </div>
-          </li>
-        </ul>
+      <span ng-show="running">
+        <div class="info">
+          Remember:
+          <code>book(id, title)</code>; 
+          <code>author(id, name)</code>; 
+          <code>book_author(book_id, author_id)</code>.
+        </div>
+        
+        <div class="description info">
+          <div id="timer" ng-controller="timerController">
+            {{formattedTime}}
+          </div>
+
+          <span>{{roundDescription}}</span>
+        </div>
+
+        <div class="query">
+          <textarea id="query" name="query"
+                    ng-model="query"
+                    ng-keydown="handleKeyDown($event)"></textarea>
+          <button id="try" ng-click="tryQuery()">
+            Send
+            <span>(or <b>Ctrl-Enter</b>)</span>
+          </button>
+        </div>
+
+        <div class="history output">
+          <ul>
+            <li ng-repeat="item in history">
+              <div class="{{item.status}}">
+                <span class="time">{{item.time}}</span>
+                <span class="result"
+                      ng-bind-html="item.result"></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </span>
+
+      <div class="victory info" ng-show="complete">
+        <p>You finished the game in {{completionTime}}. Well done!</p>
+        <p>
+          Impress your friends!
+          <a href="https://twitter.com/intent/tweet?text=I%20finished%20You%20Can't%20SQL%20Under%20Pressure%20in%20{{completionTime}}!&url=http://aaron-miller.me/sqlunderpressure/">Tweet</a>
+          or
+          (eventually) Facebook
+          your completion time.
+        </p>
+        <p>
+          Don't forget to play UsVsTh3m's
+          <a href="http://games.usvsth3m.com/javascript-under-pressure/">
+            You Can't JavaScript Under Pressure</a>, if you haven't
+            already! That's where I got the idea for this, and theirs
+            looks a lot niftier than mine does, too.
+        </p>
       </div>
     </div>
     

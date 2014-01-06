@@ -1,11 +1,153 @@
-div.tables span, div.history span {
-  white-space: pre;
+/* Body and other general styles */
+
+body {
+  margin: 0px;
+  font-family: Helvetica, sans-serif;
+}
+
+div#game {
+  margin: 1ex;
+}
+
+div.info, div#info div {
+  border-radius: 4px;
+  padding: 1ex;
+  margin-bottom: 1ex;
+
+  background: rgba(0, 0, 255, 0.125);
+  
+  transition: all 0.25s ease-in-out;
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+}
+
+table thead tr th {
+  border-bottom: #888 solid 1px;
+}
+
+th, td {
+  text-align: left;
+  padding-right: 1ex;
+  vertical-align: top;
+}
+
+div.output * table, div.schemas * table {
   font-family: monospace;
+}
+
+div.output * table {
+  white-space: pre;
+}
+
+/* Heading styles */
+
+h1 {
+  padding: 3px 1ex;
+  margin: 0px;
+  margin-bottom: 1ex;
+  background: black;
+  color: white;
+  box-shadow: 0 5px 5px 0px black;
+  border: 0ex;
+}
+
+/* Info div styles */
+
+div#info div:hover {
+  cursor: pointer;
+
+  box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+}
+
+div#info div span.title {
+  font-weight: bold;
+}
+
+div#info div#more li span {
+  font-weight: bold;
+  display: block;
+}
+
+/* Game start button styles */
+
+div#start {
+  text-align: center;
+}
+
+div#start button {
+  font-size: xx-large;
+  padding: 1ex 3ex;
+}
+
+/*
+ * Game styles
+ */
+
+/* Timer */
+
+div#game div#timer {
+  float: right;
+  font-size: x-large;
+  padding-right: 1ex;
+  margin-left: 2ex;
+}
+
+/* Schemas */
+
+div.schemas {
+  font-size: small;
+}
+
+div.schemas caption {
+  text-align: left;
+}
+
+/* Round description */
+
+div.description {
+  margin: 1ex 0;
+}
+
+/* Input */
+
+div.query, div.query textarea {
+  margin-bottom: 0ex;
+}
+
+div.query textarea {
+  border: #eee solid 1px;
+  width: 100%;
+  height: 8ex;
+}
+
+div.query button {
+  float: right;
+  margin-left: 2ex;
+}
+
+button#try {
+  font-size: x-large;
+  padding: 2ex;
+  text-align: center;
+}
+
+button#try span {
+  display: block;
+  font-size: small;
+}
+
+/* History */
+
+div.history {
+  margin-top: 0ex;
 }
 
 div.history ul {
   list-style-type: none;
   padding-left: 0ex;
+  margin-top: 0ex;
 }
 
 div.history div {
@@ -20,19 +162,10 @@ div.history span.time {
   float: right;
 }
 
-div.history span.result table thead tr th {
-  border-bottom: #888 solid 1px;
-}
-
-div.history th, div.history td {
-  text-align: left;
-  padding-right: 1ex;
-}
-
-.pass {
+div.history div.pass {
   background: #EFE;
 }
 
-.fail {
+div.history div.fail {
   background: #FEE;
 }
