@@ -3,7 +3,7 @@
 // CREATE TABLE book_author (book_id int(11), author_id int(11));
 
 var sqlite3  = require('sqlite3');
-var db = new sqlite3.Database("fun.sqlite3");
+var db = new sqlite3.Database("./db/fun.sqlite3");
 
 var tables = ['book', 'author', 'book_author'];
 
@@ -22,7 +22,9 @@ var records = {
              [8, 'Metamagical Themas']],
     'author': [[1, 'Douglas Hofstadter'],
                [2, 'Richard P. Feynman'],
-               [3, 'Robert A. Heinlein']],
+               [3, 'Robert A. Heinlein'],
+               [4, 'Charles Stross'],
+               [5, 'Peter Watts']],
     'book_author': [[1, 1],
                     [2, 2],
                     [3, 3],
